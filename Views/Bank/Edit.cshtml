@@ -1,0 +1,28 @@
+﻿@model FCInformesSolucion.Models.BankViewModel
+<div class="page-title">
+    <div class="title_left">
+        <h3>@ViewBag.Title <small>Editar</small> </h3>
+        <div class="title_actions">
+            <button type="button" class="btn btn-success btn-xs" onclick="$('#maintenance-form').submit()">ACTUALIZAR</button>
+            <button type="button" class="btn btn-link" onclick="window.location='@Url.Content("~/Bank")'">CANCELAR</button>
+        </div>
+    </div>
+    <div class="title_right">
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="x_panel">
+    <div class="x_content">
+        <form role="form" class="form-horizontal" action='@Url.Action("Edit")' id="maintenance-form" method="post">
+            @Html.HiddenFor(m => m.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-3" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>            
+        </form>
+    </div>
+</div>

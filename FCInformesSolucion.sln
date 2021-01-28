@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCInformesSolucion", "FCInformesSolucion.csproj", "{47444115-FBCC-4373-A097-E84996C66635}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47444115-FBCC-4373-A097-E84996C66635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47444115-FBCC-4373-A097-E84996C66635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47444115-FBCC-4373-A097-E84996C66635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47444115-FBCC-4373-A097-E84996C66635}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA3B6F63-8AB2-4416-9D4D-05094475D523}
+	EndGlobalSection
+EndGlobal

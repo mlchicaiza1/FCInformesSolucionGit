@@ -1,0 +1,41 @@
+﻿@using MvcJqGrid
+@using MvcJqGrid.Enums
+@using FCInformesSolucion.Helpers
+@using FCInformesSolucion.Constants
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>@ViewBag.Title <small></small> </h3>
+        <div class="title_actions">
+            <button type="button" class="btn btn-success btn-xs" onclick="window.location='@Url.Content("~/Agency/New")'">NUEVO</button>            
+        </div>
+    </div>
+    <div class="title_right">
+        <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right">
+            @using (Html.BeginForm(null, null, FormMethod.Get, new { id = "search_form", data_prefix = "", data_grid = "maintenance-grid", @class = "clearfix", role = "form" }))
+            {
+                <div class="input-group top_search">
+                    <input type="text" name="search_query" value="" class="form-control search-query btn-xs" placeholder="Buscar">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default form-group-sm" type="submit" id="filter-search"><span class="glyphicon glyphicon-search"></span> </button>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="x_panel">
+    <div class="x_content">
+        <div class="row">
+            @(Html.MyjqGrid("maintenance-grid", ApplicationContext.PageSize)
+                .AddColumn(new Column("Name").SetLabel("Nombre"))
+                .AddColumn(new Column("Actions").SetLabel("Acciones").SetWidth(50))
+                .SetUrl(Url.Action("GetList"))
+                )
+            <div class="clearfix">
+                @Html.PaginationBtn("maintenance-grid", "pull-right")
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+﻿@using MvcJqGrid
+@using MvcJqGrid.Enums
+@using FCInformesSolucion.Helpers
+@using FCInformesSolucion.Constants
+@using FCInformesSolucion.Models
+@{ 
+    var users = ViewBag.Users as List<UserModel>;
+    var agencies = ViewBag.Agencies as List<AgencyModel>;
+    var process = Convert.ToBoolean(ViewBag.Process);
+}
+<div class="page-title">
+    <div class="title_left">
+        @if (!process)
+        {
+            <h3>Solicitudes<small></small></h3>
+        }
+        else
+        {
+            <h3>Procesar Solicitud<small></small></h3>
+        }
+
+        <div class="title_actions">
+            @if (!process)
+            {
+                <button type="button" class="btn btn-success btn-xs" onclick="window.location='@Url.Content("~/Request/New")'">NUEVO</button>
+            }
+        </div>
+    </div>
+    <div class="title_right">
+        <div class="col-md-12 col-sm-12 col-xs-12 form-group pull-right">
+            @using (Html.BeginForm(null, null, FormMethod.Get, new { id = "search_form", data_prefix = "", data_grid = "maintenance-grid", @class = "clearfix", role = "form" }))
+            {
+                <div class="top_search_actions">
+                    <a href="#" class="advance-search" data-state="close">
+                        Busqueda Avanzada <span class="fa fa-chevron-down"></span>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="top_search_filters top_search_filters hide form-group-sm row">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="close" data-dismiss="modal" onclick="$('.advance-search').click()">&times;</button>
+                            <h5 class="modal-title">Busqueda Avanzada</h5>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>CC/RUC</label><br />
+                            <input type="text" name="Identification" class="form-control input-sm" />
+                        </div>
+                        <div class="form-group">
+                            <label>Razón Social</label><br />
+                            <input type="text" name="FullNames" class="form-control input-sm" />
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha(Desde)</label><br />
+                            <input type="text" name="RequestDateFrom" class="form-control input-sm calendar" />
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha(Hasta)</label><br />
+                            <input type="text" name="RequestDateTo" class="form-control input-sm calendar" />
+                        </div>
+                        <div class="form-group">
+                            <label>Usuario</label><br />
+                            <select name="UserName" class="form-control input-sm">
+                                @foreach (var user in users)
+                                {
+                                    <option value="@user.UserName">@user.UserName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Requiriente</label><br />
+                            <input type="text" name="ApplicantName" class="form-control input-sm" />
+                        </div>
+                        <div class="form-group">
+                            <label>Sucursal</label><br />
+                            <select name="AgencyId" class="form-control input-sm">
+                                @foreach (var agency in agencies)
+                                {
+                                    <option value="@agency.Id">@agency.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ln_solid-sm"></div>
+                    <div class="row pull-right">
+                        <div class='btn-filter'>
+                            <button title="Limpiar Búsqueda" class="btn btn-link" type="reset" id="filter-limpiar"><span class="glyphicon glyphicon-erase"></span> LIMPIAR</button>
+                            <button title="Buscar" class="btn btn-info" type="submit" id="filter-search"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group top_search">
+                    <input type="text" name="search_query" value="" class="form-control search-query btn-xs" placeholder="Buscar">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default form-group-sm" type="submit" id="filter-search"><span class="glyphicon glyphicon-search"></span> </button>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="x_panel">
+    <div class="x_content">
+        <div class="" style="padding-right: 00px">
+            @(Html.MyjqGrid("maintenance-grid", ApplicationContext.PageSize)
+                    .AddColumn(new Column("AgencyId").SetLabel("Sucursal"))
+                    .AddColumn(new Column("RequestNumber").SetLabel("Número Solicitud"))
+                    .AddColumn(new Column("RequestDate").SetLabel("Fecha"))
+                    .AddColumn(new Column("Identification").SetLabel("Cédula/Ruc"))
+                    .AddColumn(new Column("FullNames").SetLabel("Nombres"))
+                    .AddColumn(new Column("ProvinceId").SetLabel("Provincia"))
+                    .AddColumn(new Column("CityId").SetLabel("Ciudad"))
+                    .AddColumn(new Column("RequestStatus").SetLabel("Estado"))
+                    .SetUrl(
+                        process ? Url.Action("GetList", new  { a = "Process" })
+                        : Url.Action("GetList")
+                    ))
+            <div class="clearfix">
+                @Html.PaginationBtn("maintenance-grid", "pull-right")
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@using FCInformesSolucion.Models
+@using FCInformesSolucion.Services;
+@using FCInformesSolucion.DAL;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+@{
+    var context = Request.RequestContext.HttpContext.GetOwinContext().Get<FCInformesContext>();
+    var menuService = new MenuService(context);
+}
+
+@helper BuidMenu(List<MenuModel> menus)
+{
+    foreach (var menu in menus)
+    {
+        var url = menu.Url ?? "/";
+        var iconStyle = "fa fa-caret-right";
+        if (menu.MenuItems.Count > 0)
+        {
+            <li>
+                @if (menu.ParentId == 0)
+                {
+                    <a title="@menu.Description"><i class="@iconStyle"></i>@menu.Name <span class="fa fa-chevron-down"></span></a>
+                }
+                else
+                {
+                    <a title="@menu.Description">@menu.Name <span class="fa fa-chevron-down"></span></a>
+                }
+                <ul class="nav child_menu">
+                    @BuidMenu(menu.MenuItems)
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a title="@menu.Description" href="@Url.Content(url)">@menu.Name</a>
+            </li>
+        }
+    }
+}
+
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+    <div class="menu_section">
+        <ul class="nav side-menu">
+            @if (Request.IsAuthenticated)
+            {
+
+                var menus = menuService.GetUserMenusTree(User.Identity.GetUserId());                
+                @BuidMenu(menus);
+            }
+            else
+            {
+
+                <li>
+                    <a><i class="fa fa-home"></i> Inicio <span class="fa fa-chevron-down"></span></a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

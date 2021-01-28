@@ -1,0 +1,64 @@
+﻿@model FCInformesSolucion.Models.EditUserViewModel
+@{
+    ViewBag.Title = "Usuarios";
+}
+<div class="page-title">
+    <div class="title_left">
+        <h3>@ViewBag.Title <small>Editar</small> </h3>
+        <div class="title_actions">
+            <button type="button" class="btn btn-success btn-xs" onclick="$('#maintenance-form').submit()">ACTUALIZAR</button>
+            <button type="button" class="btn btn-link" onclick="window.location='@Url.Content("~/User")'">CANCELAR</button>
+        </div>
+    </div>
+    <div class="title_right">
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="x_panel">
+    <div class="x_content">
+        <form role="form" class="form-horizontal" action='@Url.Action("Edit")' id="maintenance-form" method="post">            
+            @Html.HiddenFor(m=> m.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserFullName, new { @class = "control-label col-md-3" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.UserFullName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserFullName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-3" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label col-md-3" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-3" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-3" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10 pull-right">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

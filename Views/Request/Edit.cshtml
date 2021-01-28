@@ -1,0 +1,357 @@
+﻿@model FCInformesSolucion.Models.RequestViewModel
+@{
+    var provinces = ViewBag.Provinces as SelectList;
+    var cities = ViewBag.Cities as SelectList;
+    var banks = ViewBag.Banks as SelectList;
+    var agencies = ViewBag.Agencies as SelectList;
+}
+<div class="page-title">
+    <div class="title_left">
+        <h3>@ViewBag.Title <small>Editar</small> </h3>
+        <div class="title_actions">
+            <button type="button" class="btn btn-success btn-xs" onclick="$('#maintenance-form').submit()">GRABAR</button>            
+            <button type="button" class="btn btn-link" onclick="window.location='@Url.Content("~/Request")'">REGRESAR</button>
+        </div>
+    </div>
+    <div class="title_right">
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="x_panel">
+    <div class="x_content">
+        <form role="form" class="form-horizontal" action='@Url.Action("Edit")' id="maintenance-form" method="post" enctype="multipart/form-data">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.RequestStatus)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestNumber, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.TextBoxFor(m => m.RequestNumber, new { @class = "form-control input-sm", @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.RequestNumber, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-sm", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestDate, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.TextBoxFor(m => m.RequestDate, new { @class = "form-control input-sm", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Identification, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.TextBoxFor(m => m.Identification, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(m => m.Identification, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FullNames, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.TextBoxFor(m => m.FullNames, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(m => m.FullNames, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ProvinceId, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.DropDownListFor(m => m.ProvinceId, provinces, "--seleccione--", new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(m => m.ProvinceId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CityId, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.DropDownListFor(m => m.CityId, cities, "--seleccione--", new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(m => m.CityId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Place, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.TextBoxFor(m => m.Place, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(m => m.Place, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Telephone, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control input-sm telefono" })
+                            @Html.ValidationMessageFor(m => m.Telephone, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Cellphone, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.TextBoxFor(m => m.Cellphone, new { @class = "form-control input-sm celular" })
+                                    @Html.ValidationMessageFor(m => m.Cellphone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.BankId, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.DropDownListFor(m => m.BankId, banks, "--seleccione--", new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(m => m.BankId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ApplicantName, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.TextBoxFor(m => m.ApplicantName, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(m => m.ApplicantName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AgencyId, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.DropDownListFor(m => m.AgencyId, agencies, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(m => m.AgencyId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="IdentificationAttachment">Cópia de Cédula de Ciudadanía</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment1Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=1")">@Model.Attachment1Name</a>
+                        }
+                    }
+
+                    <input type="file" name="IdentificationAttachment" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="Identification1Attachment">Adjuntar documento 1</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment2Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=2")">@Model.Attachment2Name</a>
+                        }
+                    }
+
+                    <input type="file" name="Identification1Attachment" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="Identification2Attachment">Adjuntar documento 2</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment3Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=3")">@Model.Attachment3Name</a>
+                        }
+                    }
+
+                    <input type="file" name="Identification2Attachment" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="Identification3Attachment">Adjuntar documento 3</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment4Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=4")">@Model.Attachment4Name</a>
+                        }
+                    }
+
+                    <input type="file" name="Identification3Attachment" value="" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+<script>
+    $(function () {
+
+        setRequestStatus();
+
+        var getCities = function (provinceId, callback) {
+
+            $("#CityId").empty();
+            if (provinceId > 0) {
+                var url = baseUrl + "/City/GetByProvince?ProvinceId=" + provinceId;
+                $.getJSON(url, function (data) {
+                    if (data.success) {
+
+                        $("#CityId").append(
+                            "<option value='0'>--seleccione--</option>"
+                        );
+
+                        $.each(data.data, function (index, item) {
+                            $("#CityId").append(
+                                "<option value='" + item.Id + "'>" + item.Name + "</option>"
+                            );
+                        });
+
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            }
+        }
+
+        $("#ProvinceId").change(function () {
+            getCities(parseInt($("#ProvinceId").val()));
+        });
+
+        $("#Identification").change(function () {
+
+            var identification = $("#Identification").val();
+            if (identification != "") {
+                var url = baseUrl + "/Request/GetClient?Identification=" + identification;
+                $.getJSON(url, function (data) {
+                    if (data.success) {
+                        $("#FullNames").val(data.data.FullNames);
+                        if (data.data.ProvinceId > 0) {
+                            $("#ProvinceId").val(data.data.ProvinceId);
+                            getCities(data.data.ProvinceId, () => {                                
+                                if (data.data.CityId > 0) {
+                                    $("#CityId").val(data.data.CityId);
+                                }
+                            })
+                        }
+                        $("#Place").val(data.data.Place);
+                        $("#Telephone").val(data.data.Telephone);
+                        $("#Cellphone").val(data.data.Cellphone);
+                        $("#Address").val(data.data.Address);
+                        if (data.data.BankId > 0) {
+                            $("#BankId").val(data.data.BankId);
+                        }
+                        $("#ApplicantName").val(data.data.ApplicantName);
+                        $("#Email").val(data.data.Email);
+                    } else {
+                        $("#FullNames").val("");
+                        $("#ProvinceId").val(0);
+                        $("#CityId").val(0);
+                        $("#Place").val("");
+                        $("#Telephone").val("");
+                        $("#Cellphone").val("");
+                        $("#Address").val("");
+                        $("#BankId").val(0);
+                        $("#ApplicantName").val("");
+                        $("#Email").val("");
+                    }
+                });
+            }
+        });
+    });
+
+    var anulmment = function () {
+        var id = $("#Id").val();        
+        var url = baseUrl + "/Request/Annulment/" + id;
+        $.getJSON(url, function (data) {
+            if (data.success) {
+                $("#RequestStatus").val(3);
+                setRequestStatus();
+                toastr["success"]("Solicitud anulada correctamente");
+            } else {
+                toastr["error"]("Error al anular la solicitud");
+            }
+        });
+    }
+
+    var validate = function () {
+        var id = $("#Id").val();
+        var url = baseUrl + "/Request/Validate/" + id;
+        $.getJSON(url, function (data) {
+            if (data.success) {
+                $("#RequestStatus").val(2);
+                setRequestStatus();
+                toastr["success"]("Solicitud validada correctamente");
+            } else {
+                toastr["error"]("Error al validar la solicitud");
+            }
+        });
+    }
+
+    var setRequestStatus = function () {
+        
+        $("#action-validate").hide();
+        $("#action-anulmment").hide();
+        var id = $("#Id").val();
+
+        var requestStatus = $("#RequestStatus").val();            
+        if (requestStatus == 1) {
+            $("#action-validate").show();            
+        }
+        if (requestStatus == 3) {            
+            window.location = baseUrl + "/Request/View/" + id;
+        }
+    }
+
+</script>
+} 

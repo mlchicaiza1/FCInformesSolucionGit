@@ -1,0 +1,696 @@
+﻿@using FCInformesSolucion.Models
+@using FCInformesSolucion.Constants
+@model FCInformesSolucion.Models.RequestViewModel
+@{
+    var provinces = ViewBag.Provinces as SelectList;
+    var cities = ViewBag.Cities as SelectList;
+    var banks = ViewBag.Banks as SelectList;
+    var agencies = ViewBag.Agencies as SelectList;
+    var processStatus = ViewBag.ProcessStatus as SelectList;
+    var process = Convert.ToBoolean(ViewBag.Process);
+}
+<div class="page-title">
+    <div class="title_left">
+        <h3>SOLICITUD <small>@Model.RequestNumber.ToString("000000000")</small> </h3>
+        <div class="title_actions">
+            @if (!process)
+            {
+                <button type="button" class="btn btn-success btn-xs" onclick="edit()" id="action-edit" style="display:none">EDITAR</button>
+                <button type="button" class="btn btn-success btn-xs" onclick="validate()" id="action-validate" style="display:none">VALIDAR</button>
+                <button type="button" class="btn btn-link" style="color:red; display:none" onclick="anulmment()" id="action-anulmment">ANULAR</button>
+                <button type="button" class="btn btn-link" style="display:none" onclick="printRequest()" id="action-print">IMPRIMIR</button>
+                <button type="button" class="btn btn-link" style="display:none" onclick="sendByEmail()" id="action-email">ENVIAR POR CORREO</button>
+                <button type="button" class="btn btn-link" onclick="window.location='@Url.Content("~/Request")'">REGRESAR</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-success" onclick="process()" id="action-process">PROCESAR</button>
+                <button type="button" class="btn btn-success" onclick="validate2()" id="action-process-validate">VALIDAR</button>
+                <button type="button" class="btn btn-link" onclick="printRequest2()" id="action-print2">IMPRIMIR</button>
+                <button type="button" class="btn btn-link" onclick="sendByEmail()" id="action-email2">ENVIAR POR CORREO</button>
+                <button type="button" class="btn btn-link" onclick="window.location='@Url.Content("~/Request?a=Process")'">REGRESAR</button>
+            }
+
+        </div>
+    </div>
+    <div class="title_right">
+        <ul class="nav navbar-right title-process-status">
+            @if (!process)
+            {
+                <li>
+                    <span id="status-saved" class="btn-arrow active"> GUARDADO</span>
+                </li>
+                <li>
+                    <span id="status-validated" class="btn-arrow active"> VALIDADA</span>
+                </li>
+                <li>
+                    <span id="status-anulated" class="btn-arrow active"> ANULADO</span>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <span id="status2-saved" class="btn-arrow active"> GUARDADO</span>
+                </li>
+                <li>
+                    <span id="status2-validated" class="btn-arrow active"> VALIDADA</span>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="x_panel">
+    <div class="x_content">
+        <form role="form" class="form-horizontal" action='@Url.Action("Edit")' id="maintenance-form" method="post" enctype="multipart/form-data">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.RequestStatus)
+            @Html.HiddenFor(m => m.RequestProcessStatus)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestNumber, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="form-value">
+                                @Model.RequestNumber.ToString("000000000")
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    <span class="form-value">
+                                        @Model.UserName
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestDate, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="form-value">
+                                @Model.RequestDate
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Identification, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    <span class="form-value">
+                                        @Model.Identification
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FullNames, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="form-value">
+                                @Model.FullNames
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.ProvinceId, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.DropDownListFor(m => m.ProvinceId, provinces, "--seleccione--",
+                                        new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CityId, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.DropDownListFor(m => m.CityId, cities, "--seleccione--", new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Place, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    <span class="form-value">
+                                        @Model.Place
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Telephone, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="form-value">
+                                @Model.Telephone
+                            </span>
+
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Cellphone, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    <span class="form-value">
+                                        @Model.Cellphone
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="form-value">
+                                @Model.Address
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.BankId, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    @Html.DropDownListFor(m => m.BankId, banks, "--seleccione--",
+                                        new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ApplicantName, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <span class="form-value">
+                                @Model.ApplicantName
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-4 col-sm-4" })
+                                <div class="col-md-8 col-sm-8">
+                                    <span class="form-value">
+                                        @Model.Email
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AgencyId, new { @class = "control-label col-md-3 col-sm-3" })
+                <div class="col-md-9 col-sm-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @Html.DropDownListFor(m => m.AgencyId, agencies, new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (process && (Model.RequestProcessStatus > 0))
+            {
+                <h4>Proceso</h4>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ProccesStatusId, new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <span class="form-value">
+                                    @Model.ProcessStatus
+                                </span>
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+                                <div class="row">
+                                    @Html.LabelFor(m => m.SuggestedInitialQuota, new { @class = "control-label col-md-4 col-sm-4" })
+                                    <div class="col-md-8 col-sm-8">
+                                        <span class="form-value">
+                                            @(Model.SuggestedInitialQuota?.ToString("c"))
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ProcessRemarks, new { @class = "control-label col-md-3 col-sm-3" })
+                    <div class="col-md-9 col-sm-9">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <span class="form-value">
+                                    @Model.ProcessRemarks
+                                </span>
+                            </div>
+                            <div class="col-md-8 col-sm-8">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="IdentificationAttachment">Cópia de Cédula de Ciudadanía</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment1Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=1")">@Model.Attachment1Name</a>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="Identification1Attachment">Documento 1</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment2Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=2")">@Model.Attachment2Name</a>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="Identification2Attachment">Documento 2</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment3Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=3")">@Model.Attachment3Name</a>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3" for="Identification3Attachment">Documento 3</label>
+                <div class="col-md-9 col-sm-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment4Name))
+                        {
+                            <a target="_blank" href="@Url.Content("~/Request/Attachment?id="+ Model.Id + "&index=4")">@Model.Attachment4Name</a>
+                        }
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="email-modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enviar por Correo - <small>@ViewBag.Title</small> </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">Para</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            <input type="text" class="form-control input-sm" id="To" name="To" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">CC</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            <input type="text" class="form-control input-sm" id="Cc" name="Cc" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">Asunto</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            <input type="text" class="form-control input-sm" id="Subject" name="CorreoAsunto" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">Mensaje</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            <textarea class="form-control input-sm" id="CorreoMensaje" name="CorreoMensaje"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="aceptSendByEmail" class="btn btn-success btn-xs">ACEPTAR</button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="process-modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Procesar Solicitud </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">Estado Actual</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            @Html.DropDownListFor(m => m.ProccesStatusId, processStatus, new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">Cupo Inicial Sugerido</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            <input type="text" class="form-control input-sm number"
+                                   id="SuggestedInitialQuota" name="SuggestedInitialQuota"
+                                   value="@Model.SuggestedInitialQuota" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">Fecha</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            <input type="text" class="form-control input-sm calendar"
+                                   id="ProcessedDate" name="ProcessedDate"
+                                   value="@(Model.ProcessedDate?.ToString(ApplicationContext.DateFormat))" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 col-lg-4 col-xs-4">Observaciones</label>
+                        <div class="col-md-8 col-lg-8 col-xs-8">
+                            <textarea class="form-control input-sm"
+                                      id="ProcessRemarks" name="ProcessRemarks">@Model.ProcessRemarks</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="aceptProcess" class="btn btn-success btn-xs">ACEPTAR</button>
+                <button type="button" class="btn btn-link" data-dismiss="modal">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            setRequestStatus();
+            $("#ProvinceId").replaceWith("<span class='form-value'>" + $("#ProvinceId option[selected]").text() + "</span>");
+            $("#CityId").replaceWith("<span class='form-value'>" + $("#CityId option[selected]").text() + "</span>");
+            $("#BankId").replaceWith("<span class='form-value'>" + $("#BankId option[selected]").text() + "</span>");
+            $("#AgencyId").replaceWith("<span class='form-value'>" + $("#AgencyId option[selected]").text() + "</span>");
+
+            $("#aceptSendByEmail").click(() => {
+                aceptSendByEmail();
+            });
+
+            $("#aceptProcess").click(() => {
+                aceptProcess();
+            });
+        });
+
+        var edit = function () {
+            var id = $("#Id").val();
+            window.location = baseUrl + "/Request/Edit/" + id;
+        }
+
+        var anulmment = function () {
+            var id = $("#Id").val();
+            var url = baseUrl + "/Request/Annulment/" + id;
+
+            $.getJSON(url, function (data) {
+                if (data.success) {
+                    $("#RequestStatus").val(3);
+                    setRequestStatus();
+                    toastr["success"]("Solicitud anulada correctamente");
+                } else {
+                    toastr["error"]("Error al anular la solicitud");
+                }
+            });
+        }
+
+        var validate = function () {
+            var id = $("#Id").val();
+            var url = baseUrl + "/Request/Validate/" + id;
+            $.getJSON(url, function (data) {
+                if (data.success) {
+                    $("#RequestStatus").val(2);
+                    setRequestStatus();
+                    toastr["success"]("Solicitud validada correctamente");
+                } else {
+                    toastr["error"]("Error al validar la solicitud");
+                }
+            });
+        }
+
+        var printRequest = function () {
+            var id = $("#Id").val();
+            open(baseUrl + "/Request/ExportPdf/" + id);
+        }
+
+        var sendByEmail = function () {
+            $("#email-modal").modal("show");
+        }
+
+        var process = function () {
+            var requestProcessStatus = $("#RequestProcessStatus").val();
+            if (requestProcessStatus == 0) {
+                $("#ProcessedDate").val("@DateTime.Now.ToString(ApplicationContext.DateFormat)");
+            }
+
+            $("#process-modal").modal("show");
+        }
+
+        var aceptProcess = function () {
+
+            var hasError = false;
+            var $id = $("#Id");
+            var $proccesStatusId = $("#ProccesStatusId");
+            var $suggestedInitialQuota = $("#SuggestedInitialQuota");
+            var $processedDate = $("#ProcessedDate");
+            var $processRemarks = $("#ProcessRemarks");
+
+            if ($proccesStatusId.val() == "" || $proccesStatusId.val() == 0) {
+                $proccesStatusId.closest(".form-group").addClass("has-error");
+                toastr["error"]("Estado Actual es obligatorio.");
+                hasError = true;
+            }
+
+            if ($suggestedInitialQuota.val() == "" || $suggestedInitialQuota.val() == 0) {
+                $suggestedInitialQuota.closest(".form-group").addClass("has-error");
+                toastr["error"]("Cupo Inicial Sugerido es obligatorio.");
+                hasError = true;
+            }
+
+            if ($processedDate.val() == "") {
+                $processedDate.closest(".form-group").addClass("has-error");
+                toastr["error"]("Fecha es obligatorio.");
+                hasError = true;
+            }
+
+            if (hasError) {
+                setTimeout(() => {
+                    $proccesStatusId.closest(".form-group").removeClass("has-error");
+                    $suggestedInitialQuota.closest(".form-group").removeClass("has-error");
+                    $processedDate.closest(".form-group").removeClass("has-error");
+                }, 3000);
+                return;
+            }
+            var url = url = baseUrl + "/Request/ProcessRequest";
+            var data = {
+                requestModel: {
+                    Id: $id.val(),
+                    ProccesStatusId: $proccesStatusId.val(),
+                    SuggestedInitialQuota: getMoney($suggestedInitialQuota.val()),
+                    ProcessedDate: $processedDate.val(),
+                    ProcessRemarks: $processRemarks.val(),
+                    RequestProcessStatus: 1 //Estado Guardado
+                }
+            }
+            $.post(url, data, function (response) {
+                if (response.success) {
+                    toastr["success"]("Proceso guardado correctamente");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    toastr["error"]("No se pudo grabar el proceso." + response.message);
+                }
+            });
+        };
+
+        var validate2 = function () {
+            var id = $("#Id").val();
+            var url = baseUrl + "/Request/ProcessValidate/" + id;
+            $.getJSON(url, function (data) {
+                if (data.success) {
+                    toastr["success"]("Solicitud validada correctamente");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    toastr["error"]("Error al validar la solicitud");
+                }
+            });
+        }
+
+        var aceptSendByEmail = function () {
+
+            var id = $("#Id").val();
+            var $to = $("#To");
+            var $cc = $("#Cc");
+            var $subject = $("#Subject");
+            var $message = $("#CorreoMensaje");
+            var hasError = false;
+
+            if ($to.val() == "") {
+                $to.closest(".form-group").addClass("has-error");
+                toastr["error"]("Para es obligatorio.");
+                hasError = true;
+            }
+
+            if ($subject.val() == "") {
+                $subject.closest(".form-group").addClass("has-error");
+                toastr["error"]("Asunto es obligatorio.");
+                hasError = true;
+            }
+
+            if ($message.val() == "") {
+                $message.closest(".form-group").addClass("has-error");
+                toastr["error"]("Mensaje es obligatorio.");
+                hasError = true;
+            }
+
+            if (hasError) {
+                setTimeout(() => {
+                    $to.closest(".form-group").removeClass("has-error");
+                    $cc.closest(".form-group").removeClass("has-error");
+                    $subject.closest(".form-group").removeClass("has-error");
+                    $message.closest(".form-group").removeClass("has-error");
+                }, 3000);
+                return;
+            }
+            var url = "";
+            @if (!process) {
+                <text>
+                url = baseUrl + "/Request/SendEmail";
+                </text>
+            }
+            else
+            {
+                <text>
+                url = baseUrl + "/Request/SendEmail2";
+                </text>
+            }
+            var data = {
+                model: {
+                    Id: id,
+                    Subject: $subject.val(),
+                    To: $to.val(),
+                    Cc: $cc.val(),
+                    Message: $message.val(),
+                }
+            }
+
+            $.post(url, data, function (response) {
+                if (response.success) {
+                    toastr["success"]("Correo enviado correctamente");
+                    $("#email-modal").modal("hide");
+                } else {
+                    toastr["error"]("No se pudo enviar el correo." + response.message);
+                }
+            });
+        };
+
+        var setRequestStatus = function () {
+
+            $("#action-edit").hide();
+            $("#action-validate").hide();
+            $("#action-anulmment").hide();
+            $("#action-print").hide();
+            $("#action-email").hide();
+
+            $("#status-saved").hide();
+            $("#status-validated").hide();
+            $("#status-anulated").hide();
+
+            var requestStatus = $("#RequestStatus").val();
+            if (requestStatus == 1) {
+                $("#action-edit").show();
+                $("#action-validate").show();
+                $("#status-saved").show();
+            }
+            else if (requestStatus == 2) {
+                $("#action-anulmment").show();
+                $("#action-print").show();
+                $("#action-email").show();
+
+                $("#status-validated").show();
+            }
+            else if (requestStatus == 3) {
+                $("#status-anulated").show();
+                //$("#action-anulmment").show();
+            }
+
+
+            //Process
+            $("#action-process").hide();
+            $("#action-process-validate").hide();
+            $("#action-print2").hide();
+            $("#action-email2").hide();
+
+            $("#status2-saved").hide();
+            $("#status2-validated").hide();
+
+            @if (process)
+            {
+                <text>
+                var requestProcessStatus = $("#RequestProcessStatus").val();
+                if (requestStatus == 2 && requestProcessStatus == 0) {
+                    $("#action-process").show();
+                }
+                else if (requestProcessStatus == 1) {
+                    $("#status2-saved").show();
+                    $("#action-process").text("EDITAR");
+                    $("#action-process").show();
+                    $("#action-process-validate").show();
+                }
+                else if (requestProcessStatus == 2) {
+                    $("#status2-validated").show();
+                    $("#action-print2").show();
+                    $("#action-email2").show();
+                }
+
+                </text>
+            }
+        }
+
+        var printRequest2 = function () {
+            var id = $("#Id").val();
+            open(baseUrl + "/Request/ExportPdf2/" + id);
+        }
+
+    </script>
+} 

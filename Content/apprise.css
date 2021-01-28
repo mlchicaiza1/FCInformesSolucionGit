@@ -1,0 +1,109 @@
+.apprise-overlay {
+  background:  #000;
+  opacity: 0.5 !important;
+  filter: alpha(opacity=50);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+}
+
+div.apprise {
+  /*border: 1px solid #D45126;*/
+  background: #fff;
+  color: #111;
+  display: none;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  left: 33% !important;
+  max-height: 90%;
+  overflow: hidden;
+  position: fixed;
+  top: -100%;
+  width: 33% !important;
+  z-index: 10001;
+  background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    outline: 0 none;
+
+}
+
+div.apprise .apprise-inner {
+  padding: 20px;
+  width: auto;
+}
+div.apprise .apprise-inner .apprise-content {
+  color: #363636;
+  clear: both;
+  float: none;
+  padding: 0px;
+}
+div.apprise .apprise-input {
+  margin-top: 10px;
+  padding: 10px 0;
+}
+
+div.apprise .apprise-input input {
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+  -mox-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+  -webkit-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.1);
+  display: block;
+  font-size: 13px;
+  margin: 0 auto;
+  padding: 5px 10px;
+  width: 90%;
+}
+
+div.apprise .apprise-input input:focus {
+  border-color: #01AEF0;
+  outline: none;
+}
+
+div.apprise .apprise-buttons {
+  border-top: 1px solid #aaa;
+  padding: 10px 20px;
+  text-align: right;
+  width: auto;
+}
+
+div.apprise .apprise-buttons button {
+  /*width: 95px;*/
+  display: inline-block;
+    margin: 0 0 0 5px;
+  /*background: #414244;
+  text-align: center;
+  color: #FFFFFF;
+  border: none 0px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 0px;
+  margin-left: 5px; 
+  overflow: hidden;*/
+}
+
+/*div.apprise .apprise-buttons button:hover {
+  background: #D45126;
+}
+
+div.apprise .apprise-buttons button.blue {
+  background: #01AEF0;
+}
+
+div.apprise .apprise-buttons button.red {
+  background: #D23A30;
+}
+
+div.apprise .apprise-buttons button.blue, div.apprise .apprise-buttons button.red {
+  color: #fff;
+  text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+}*/

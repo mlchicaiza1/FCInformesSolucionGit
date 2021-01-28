@@ -1,0 +1,219 @@
+﻿@model FCInformesSolucion.Models.RequestViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <img src="~/Content/images/Logo_FCInformes.png" />
+    </div>
+    <div class="title_right">
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="x_panel">
+    <div class="x_content">
+        <div class="form-horizontal">  
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestStatus, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            @if (Model.RequestStatus == 1)
+                            {
+                                <span class="form-value-print">
+                                    GUARDADO
+                                </span>
+                            }
+                            @if (Model.RequestStatus == 2)
+                            {
+                                <span class="form-value-print">
+                                    VALIDADA
+                                </span>                                
+                            }
+                            @if (Model.RequestStatus == 3)
+                            {
+                                <span class="form-value-print">
+                                    ANULADO
+                                </span> 
+                            }
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestNumber, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                            <span class="form-value-print">
+                                @Model.RequestNumber.ToString("000000000")
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                            <div class="row">
+                                @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-4 col-sm-4 col-xs-6" })
+                                <div class="col-md-8 col-sm-8 col-xs-6">
+                                    <span class="form-value-print">
+                                        @Model.UserName
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RequestDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                            <span class="form-value-print">
+                                @Model.RequestDate
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Identification, new { @class = "control-label col-md-4 col-sm-4 col-xs-6" })
+                                <div class="col-md-8 col-sm-8 col-xs-6">
+                                    <span class="form-value-print">
+                                        @Model.Identification
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FullNames, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                            <span class="form-value">
+                                @Model.FullNames
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Province, new { @class = "control-label col-md-4 col-sm-4 col-xs-6" })
+                                <div class="col-md-8 col-sm-8 col-xs-6">
+                                    @Model.Province
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.City, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                            @Model.City
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Place, new { @class = "control-label col-md-4 col-sm-4 col-xs-6" })
+                                <div class="col-md-8 col-sm-6">
+                                    <span class="form-value-print">
+                                        @Model.Place
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Telephone, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                            <span class="form-value-print">
+                                @Model.Telephone
+                            </span>
+
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Cellphone, new { @class = "control-label col-md-4 col-sm-4 col-xs-6" })
+                                <div class="col-md-8 col-sm-6">
+                                    <span class="form-value-print">
+                                        @Model.Cellphone
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                            <span class="form-value">
+                                @Model.Address
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Bank, new { @class = "control-label col-md-4 col-sm-4 col-xs-6" })
+                                <div class="col-md-8 col-sm-6">
+                                    @Model.Bank
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ApplicantName, new { @class = "control-label col-md-3 col-sm-3 col-xs-3" })
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                            <span class="form-value">
+                                @Model.ApplicantName
+                            </span>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-4 col-sm-4 col-xs-6" })
+                                <div class="col-md-8 col-sm-6">
+                                    <span class="form-value">
+                                        @Model.Email
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="IdentificationAttachment">Cópia de Cédula de Ciudadanía</label>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.Attachment1Name))
+                        {
+                            <span class="form-value-print">
+                                SI
+                            </span>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <div style="border: solid 1px #000">
+                    <div style="font-weight: bold; text-align: center; border-bottom: solid 1px #000">SCRIPT LEGAL</div>
+                    <div>
+                        <p style="text-align: justify; padding: 10px">
+                            @Html.Raw(Model.RequestLegalScript)
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
